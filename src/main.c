@@ -21,6 +21,8 @@ void process_events(game_t *game, map_t *map)
         if (sfKeyboard_isKeyPressed(sfKeyEscape))
             sfRenderWindow_close(game->window);
         update_view_key_arrows(game, map);
+        if (game->event.type == sfEvtMouseButtonPressed)
+            view_point_events(map, game);
     }
 }
 
