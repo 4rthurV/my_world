@@ -45,6 +45,7 @@ typedef struct game_s {
     sfVector2f window_size;
     int angle_x;
     int angle_y;
+    char *state_mode;
 } game_t;
 
 typedef struct map_s {
@@ -88,11 +89,28 @@ bool resize_iso_map(game_t *game, map_t *map);
 bool resize_array_map(map_t *map, int new_width, int new_height);
 void free_iso_map_partial(sfVector2f **iso_map, int num_rows);
 int handle_resize_map(game_t *game, map_t *map, bool increase);
-void reset_resize_event(game_t *game, int *resized);
-void handle_resize_event(game_t *game, map_t *map, int *resized);
+void reset_resize_event(game_t *game, buttons_t *buttons, int *resized);
+void handle_resize_event(game_t *game, buttons_t *buttons,
+    map_t *map, int *resized);
 buttons_t *init_buttons(game_t *game);
 void free_buttons(buttons_t *buttons);
 void free_all(map_t *map, buttons_t *buttons, game_t *game);
 void check_hover(game_t *game, buttons_t *buttons);
 char *concat_image_path(char *image_path, char *name);
+int click_quitbutton(game_t *game, buttons_t *buttons);
+void check_clicks(game_t *game, buttons_t *buttons, map_t *map);
+void switch_textures(buttons_t *current);
+int button_is_clicked(game_t *game, buttons_t *current);
+void flip_other_buttons_state(buttons_t *buttons, char *new_button_state);
+void handle_view_mode(game_t *game, buttons_t *buttons);
+void change_mode_name(game_t *game, char *new_mode);
+bool duplicate_maps_one_smaller(map_t *map, int ***new_array_map,
+    sfVector2f ***new_iso_map);
+bool duplicate_maps_one_bigger(map_t *map, int ***new_array_map,
+    sfVector2f ***new_iso_map);
+void free_maps(int **array_map, sfVector2f **iso_map, int map_height);
+void add_button(buttons_t **head, sfVector2f pos,
+    char *image_path, char *name);
+void init_terraform_buttons(buttons_t *buttons);
+void draw_buttons(game_t *game, buttons_t *buttons);
 #endif
