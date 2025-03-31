@@ -19,8 +19,6 @@ SRC	=	src/main.c \
 		src/hover.c \
 		src/click_quit.c \
 		src/check_clicks.c \
-		src/terraform_mode.c \
-		src/texture_mode.c \
 		src/view_mode.c \
 		src/init_buttons.c \
 		src/draw_buttons.c \

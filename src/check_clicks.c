@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2024
-** check_clicks
+** G-ING-200-LIL-2-1-myworld-arthur.vignes
 ** File description:
-** Handles click events
+** check_clicks.c
 */
 
 #include "my_world.h"
@@ -22,49 +22,34 @@ void flip_other_buttons_state(buttons_t *buttons, char *new_button_state)
     }
 }
 
-static void exit_texture_mode(game_t *game, buttons_t *current,
-    buttons_t *buttons)
-{
-    current->phase = 0;
-    switch_textures(current);
-    change_mode_name(game, "view");
-    reset_texture_states(buttons);
-}
-
-void handle_texture_mode(game_t *game, buttons_t *buttons)
+void handle_terraform_mode(game_t *game, buttons_t *buttons, map_t *map)
 {
     buttons_t *current = buttons;
+    static int resized = 0;
 
     if (!current)
         return;
+    handle_resize_event(game, buttons, map, &resized);
+    reset_resize_event(game, buttons, &resized);
+    if (game->event.type == sfEvtMouseButtonPressed)
+        view_point_events(map, game);
     while (current && current->name) {
-        if (strcmp(current->name, "state_textures") == 0
-            && button_is_clicked(game, current)) {
-            exit_texture_mode(game, current, buttons);
+        if (strcmp(current->name, "state_terraform") == 0
+            && button_is_clicked(game, current) && current->phase == 2) {
+            current->phase = 0;
+            switch_textures(current);
+            change_mode_name(game, "view");
             return;
         }
         current = current->next;
     }
-    if (strcmp(game->state_mode, "textures") == 0) {
-        handle_texture_buttons(game, buttons);
-    }
-}
-
-static void handle_mode(game_t *game, buttons_t *buttons, map_t *map)
-{
-    if (strcmp(game->state_mode, "terraform") == 0) {
-        handle_terraform_mode(game, buttons, map);
-        return;
-    }
-    if (strcmp(game->state_mode, "textures") == 0) {
-        handle_texture_mode(game, buttons);
-        return;
-    }
-    handle_view_mode(game, buttons);
 }
 
 void check_clicks(game_t *game, buttons_t *buttons, map_t *map)
 {
     update_view_key_arrows(game, map);
-    handle_mode(game, buttons, map);
+    if (strcmp(game->state_mode, "view") == 0)
+        handle_view_mode(game, buttons);
+    else if (strcmp(game->state_mode, "terraform") == 0)
+        handle_terraform_mode(game, buttons, map);
 }

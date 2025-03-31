@@ -18,15 +18,3 @@ void init_terraform_buttons(buttons_t *buttons)
     add_button(&buttons, (sfVector2f){130, 420},
         "graphics/idle/", "temp_reset");
 }
-
-void init_textures_buttons(buttons_t *buttons)
-{
-    add_button(&buttons,
-        (sfVector2f){10, 960}, "graphics/idle/", "state_textures");
-    add_button(&buttons,
-        (sfVector2f){130, 960}, "graphics/idle/", "state_grass");
-    add_button(&buttons,
-        (sfVector2f){260, 960}, "graphics/idle/", "state_water");
-    add_button(&buttons,
-        (sfVector2f){390, 960}, "graphics/idle/", "state_stone");
-}

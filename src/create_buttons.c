@@ -93,6 +93,5 @@ buttons_t *init_buttons(game_t *game)
         (sfVector2f){game->window_size.x - 230, 10},
         "graphics/idle/", "sound");
     init_terraform_buttons(buttons);
-    init_textures_buttons(buttons);
     return buttons;
 }
