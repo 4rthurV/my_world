@@ -9,12 +9,17 @@
 
 void init_game(game_t *game)
 {
+    char *mode = malloc(sizeof(char) * 5);
+
     game->mode = (sfVideoMode){1920, 1080, 32};
     game->window = sfRenderWindow_create(game->mode, "my_world",
         sfResize | sfClose, NULL);
     game->window_size = (sfVector2f){1920, 1080};
     game->angle_x = 30;
     game->angle_y = 20;
+    mode = strdup("view");
+    game->state_mode = strdup(mode);
+    free(mode);
 }
 
 map_t *init_map(void)
