@@ -7,18 +7,6 @@
 
 #include "my_world.h"
 
-int button_is_clicked(game_t *game, buttons_t *current)
-{
-    sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(game->window);
-    sfFloatRect button_bounds = sfSprite_getGlobalBounds(current->sprite);
-
-    if (sfFloatRect_contains(&button_bounds, mouse_pos.x, mouse_pos.y)
-        && game->event.type == sfEvtMouseButtonPressed
-        && game->event.mouseButton.button == sfMouseLeft)
-        return 1;
-    return 0;
-}
-
 int click_quitbutton(game_t *game, buttons_t *buttons)
 {
     buttons_t *current = buttons;
