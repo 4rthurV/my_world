@@ -14,12 +14,36 @@
 
     #include <stdbool.h>
     #include <SFML/System.h>
+    #include <SFML/Graphics.h>
+    #include <SFML/Audio.h>
+    #include <SFML/Window.h>
+    #include <stdarg.h>
+    #include <stdio.h>
+    #include <stddef.h>
+    #include <float.h>
+    #include <stdlib.h>
+    #include <unistd.h>
+    #include <dirent.h>
+    #include <errno.h>
+    #include <sys/types.h>
+    #include <sys/stat.h>
+    #include <fcntl.h>
+    #include <math.h>
+    #include <string.h>
 
 typedef struct tile_s {
     double tile_x;
     double tile_y;
     struct tile_s *next;
 } tile_t;
+
+typedef struct game_s {
+    sfRenderWindow *window;
+    sfEvent event;
+    sfVideoMode mode;
+    sfSprite *image;
+    sfTexture *background;
+} game_t;
 
 tile_t *generate_tile_map(int map[MAP_Y][MAP_X]);
 sfVector2f **create_2d_map(int map_height, int map_width);

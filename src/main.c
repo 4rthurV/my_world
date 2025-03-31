@@ -24,13 +24,19 @@ static int help_option(void)
     return 0;
 }
 
+int my_world(game_t *game, sfVector2f **tile_map, int map_height, int map_width)
+{
+
+}
+
 int main(int argc, char **argv, char **env)
 {
     int map_height = MAP_Y;
     int map_width = MAP_X;
     sfVector2f **tile_map = NULL;
+    game_t *game = NULL;
 
-    if (!env || !isatty(STDIN_FILENO))
+    if (!env || !isatty(STDIN_FILENO) || (argv[1]) && strcmp(argv[1], "-h" != 0) || !game)
         return 84;
     if (argc == 2 && my_strcmp(argv[1], "-h") == 0)
         return help_option();
@@ -40,10 +46,7 @@ int main(int argc, char **argv, char **env)
             write(2, "Failed to create 2D map.\n", 26);
             return 84;
         }
-        display_tile_vectors(map_height, map_width, tile_map);
+        my_world(game, tile_map, map_height, map_width);
         return free_tile_map(tile_map, map_height);
-    } else {
-        write(2, "my_world: Too many arguments.\n", 30);
-        return 84;
     }
 }
