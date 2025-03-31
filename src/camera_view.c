@@ -10,19 +10,19 @@
 void update_view_key_arrows(game_t *game, map_t *map)
 {
     if (sfKeyboard_isKeyPressed(sfKeyLeft)) {
-        game->angle_x += 10;
+        game->angle_x += 2;
         fill_iso_map(game, map);
     }
     if (sfKeyboard_isKeyPressed(sfKeyRight)) {
-        game->angle_x -= 10;
+        game->angle_x -= 2;
         fill_iso_map(game, map);
     }
     if (sfKeyboard_isKeyPressed(sfKeyUp)) {
-        game->angle_y += 10;
+        game->angle_y += 2;
         fill_iso_map(game, map);
     }
     if (sfKeyboard_isKeyPressed(sfKeyDown)) {
-        game->angle_y -= 10;
+        game->angle_y -= 2;
         fill_iso_map(game, map);
     }
 }
