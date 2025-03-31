@@ -18,13 +18,24 @@ int free_tile_map(sfVector2f **tile_map, int map_height)
     return 0;
 }
 
+static void free_texture_row(sfTexture **texture_row, int width)
+{
+    if (!texture_row)
+        return;
+    for (int x = 0; x < width; x++) {
+        if (texture_row[x])
+            sfTexture_destroy(texture_row[x]);
+    }
+    free(texture_row);
+}
+
 void free_tile_textures(map_t *map)
 {
     if (!map || !map->tile_textures)
         return;
     for (int y = 0; y < map->map_height; y++) {
         if (map->tile_textures[y])
-            free(map->tile_textures[y]);
+            free_texture_row(map->tile_textures[y], map->map_width);
     }
     if (map->tile_textures)
         free(map->tile_textures);

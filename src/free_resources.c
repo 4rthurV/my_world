@@ -47,7 +47,8 @@ void free_game(game_t *game)
     }
 }
 
-void free_all(map_t *map, buttons_t *buttons, game_t *game)
+void free_all(map_t *map, buttons_t *buttons,
+    game_t *game, panel_t *help_panel)
 {
     if (map)
         free_map(map);
@@ -55,4 +56,11 @@ void free_all(map_t *map, buttons_t *buttons, game_t *game)
         free_buttons(buttons);
     if (game)
         free_game(game);
+    if (help_panel) {
+        if (help_panel->texture)
+            sfTexture_destroy(help_panel->texture);
+        if (help_panel->sprite)
+            sfSprite_destroy(help_panel->sprite);
+        free(help_panel);
+    }
 }
