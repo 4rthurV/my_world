@@ -34,29 +34,30 @@ bool allocate_iso_map_columns(sfVector2f **iso_map,
     return true;
 }
 
-void fill_iso_map(sfVector2f **iso_map, int map_height, int map_width)
+void fill_iso_map(game_t *game, sfVector2f **iso_map,
+    int map_height, int map_width)
 {
     int y = 0;
     int x = 0;
-    double scaled_x = 0;
-    double scaled_y = 0;
+    double base_x = game->window_size.x / 2;
+    double base_y = game->window_size.y / 2;
     static int map[MAP_Y][MAP_X] = {
-        {0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}, {0, 0, 0, 5, 3, 0},
-        {0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}
+        {0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}, {0, 70, 80, 200, 120, 80},
+        {0, 0, 0, 120, 30, 0}, {0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0}
     };
 
     for (y = 0; y < map_height; y++) {
         for (x = 0; x < map_width; x++) {
-            scaled_x = x * TILE_SIZE;
-            scaled_y = y * TILE_SIZE;
-            iso_map[y][x].x = project_iso_point_x(scaled_x, scaled_y);
-            iso_map[y][x].y =
-                project_iso_point_y(scaled_x, scaled_y, map[y][x]);
+            iso_map[y][x].x = base_x +
+                project_iso_point_x(game, x * TILE_SIZE, y * TILE_SIZE);
+            iso_map[y][x].y = base_y +
+                project_iso_point_y(game, x * TILE_SIZE,
+                y * TILE_SIZE, map[y][x]);
         }
     }
 }
 
-sfVector2f **create_2d_map(int map_height, int map_width)
+sfVector2f **create_2d_map(game_t *game, int map_height, int map_width)
 {
     sfVector2f **iso_map = NULL;
 
@@ -65,6 +66,6 @@ sfVector2f **create_2d_map(int map_height, int map_width)
         return NULL;
     if (!allocate_iso_map_columns(iso_map, map_height, map_width))
         return NULL;
-    fill_iso_map(iso_map, map_height, map_width);
+    fill_iso_map(game, iso_map, map_height, map_width);
     return iso_map;
 }
