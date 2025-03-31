@@ -9,14 +9,8 @@
 
 void update_view_key_arrows(game_t *game, map_t *map)
 {
-    float seconds = 0.0f;
     float rotation_speed = 7.5f;
 
-    if (!game->clock)
-        return;
-    seconds = sfTime_asSeconds(sfClock_getElapsedTime(game->clock));
-    if (seconds < 0.032f)
-        return;
     if (sfKeyboard_isKeyPressed(sfKeyLeft))
         game->angle_x -= rotation_speed;
     if (sfKeyboard_isKeyPressed(sfKeyRight))
@@ -25,6 +19,5 @@ void update_view_key_arrows(game_t *game, map_t *map)
         game->angle_y -= rotation_speed;
     if (sfKeyboard_isKeyPressed(sfKeyDown))
         game->angle_y += rotation_speed;
-    sfClock_restart(game->clock);
     fill_iso_map(game, map);
 }
