@@ -80,7 +80,7 @@ int create_map_grid(game_t *game, sfVertexArray *quad, map_t *map, int y);
 int draw_2d_map(game_t *game, map_t *map);
 sfVector2f **allocate_iso_map_rows(void);
 bool allocate_iso_map_columns(sfVector2f **iso_map);
-int **create_zeroed_map(void);
+int **create_zeroed_map(int width, int height);
 void free_map(map_t *map);
 map_t *init_map(void);
 void update_view_key_arrows(game_t *game, map_t *map);
