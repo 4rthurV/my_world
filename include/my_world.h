@@ -46,8 +46,14 @@ typedef struct game_s {
     sfClock *clock;
     int angle_x;
     int angle_y;
+    bool help;
     char *state_mode;
 } game_t;
+
+typedef struct panel_s {
+    sfTexture *texture;
+    sfSprite *sprite;
+} panel_t;
 
 typedef struct map_s {
     int **array_map;
@@ -98,7 +104,8 @@ void handle_resize_event(game_t *game, buttons_t *buttons,
     map_t *map, int *resized);
 buttons_t *init_buttons(game_t *game);
 void free_buttons(buttons_t *buttons);
-void free_all(map_t *map, buttons_t *buttons, game_t *game);
+void free_all(map_t *map, buttons_t *buttons,
+    game_t *game, panel_t *help_panel);
 void check_hover(game_t *game, buttons_t *buttons);
 char *concat_image_path(char *image_path, char *name);
 int click_quitbutton(game_t *game, buttons_t *buttons);
@@ -129,4 +136,7 @@ bool check_click_on_button(game_t *game, buttons_t *buttons,
 void change_tile_texture(map_t *map, game_t *game, buttons_t *buttons);
 sfTexture *load_texture_by_name(char *texture_name);
 void free_tile_textures(map_t *map);
+panel_t *init_help_panel(game_t *game);
+void handle_help_panel(game_t *game, buttons_t *buttons);
+void draw_help_panel(game_t *game, panel_t *help_panel);
 #endif
