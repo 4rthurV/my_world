@@ -26,11 +26,6 @@ static sfTexture *get_selected_texture(buttons_t *buttons)
     return NULL;
 }
 
-static double click_tile_distance_texture(int x1, int y1, int x2, int y2)
-{
-    return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
-}
-
 static bool is_valid_map_position(map_t *map, int i, int j)
 {
     return map && map->iso_map && map->tile_textures &&
@@ -38,13 +33,40 @@ static bool is_valid_map_position(map_t *map, int i, int j)
             j < map->map_width;
 }
 
+static bool is_point_in_quad(sfVector2f p, sfVector2f quad[4])
+{
+    int i = 0;
+    int j = 3;
+    bool inside = false;
+
+    while (i < 4) {
+        if (((quad[i].y > p.y) != (quad[j].y > p.y)) &&
+            (p.x < (quad[j].x - quad[i].x) * (p.y - quad[i].y) /
+            (quad[j].y - quad[i].y) + quad[i].x))
+            inside = !inside;
+        j = i;
+        i++;
+    }
+    return inside;
+}
+
 static bool is_clicked_distance(map_t *map, game_t *game, int i, int j)
 {
-    double distance = click_tile_distance_texture(map->iso_map[i][j].x,
-        map->iso_map[i][j].y, game->event.mouseButton.x,
-        game->event.mouseButton.y);
+    sfVector2f quad[4];
+    sfVector2f click_pos = {game->event.mouseButton.x,
+        game->event.mouseButton.y};
 
-    return distance < 50 && game->event.mouseButton.button == sfMouseLeft;
+    if (i + 1 >= map->map_height || j + 1 >= map->map_width)
+        return false;
+    if (!map->iso_map[i] || !map->iso_map[i + 1])
+        return false;
+    quad[0] = (sfVector2f){map->iso_map[i][j].x, map->iso_map[i][j].y};
+    quad[1] = (sfVector2f){map->iso_map[i][j + 1].x, map->iso_map[i][j + 1].y};
+    quad[2] = (sfVector2f){map->iso_map[i + 1][j + 1].x,
+        map->iso_map[i + 1][j + 1].y};
+    quad[3] = (sfVector2f){map->iso_map[i + 1][j].x, map->iso_map[i + 1][j].y};
+    return is_point_in_quad(click_pos, quad) &&
+        game->event.mouseButton.button == sfMouseLeft;
 }
 
 static int check_texture_tile_clicked(map_t *map, game_t *game,
