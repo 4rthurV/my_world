@@ -28,6 +28,7 @@ int process_events(game_t *game, map_t *map, buttons_t *buttons)
         handle_zoom_dezoom(map, game, buttons);
         check_hover(game, buttons);
         check_clicks(game, buttons, map);
+        check_sounds(game, buttons);
     }
     return 0;
 }
@@ -65,7 +66,8 @@ void my_world(game_t *game, map_t *map,
 int init_structs(game_t *game, map_t **map,
     buttons_t **buttons, panel_t **help_panel)
 {
-    init_game(game);
+    if (init_game(game) == 84)
+        return 84;
     *map = init_map();
     *buttons = init_buttons(game);
     *help_panel = init_help_panel(game);
