@@ -14,8 +14,11 @@ int button_is_clicked(game_t *game, buttons_t *current)
 
     if (sfFloatRect_contains(&button_bounds, mouse_pos.x, mouse_pos.y)
         && game->event.type == sfEvtMouseButtonPressed
-        && game->event.mouseButton.button == sfMouseLeft)
+        && game->event.mouseButton.button == sfMouseLeft) {
+        if (game->sounds->sound_on == true)
+            sfMusic_play(game->sounds->click);
         return 1;
+    }
     return 0;
 }
 
