@@ -13,12 +13,12 @@ static int help_option(void)
     return 0;
 }
 
-void process_events(game_t *game, map_t *map, buttons_t *buttons)
+int process_events(game_t *game, map_t *map, buttons_t *buttons)
 {
     while (sfRenderWindow_pollEvent(game->window, &game->event)) {
         if (game->event.type == sfEvtClosed) {
-            free_all(map, buttons, game);
             sfRenderWindow_close(game->window);
+            return 84;
         }
         if ((game->event.type == sfEvtKeyPressed &&
             game->event.key.code == sfKeyEscape)
@@ -28,6 +28,7 @@ void process_events(game_t *game, map_t *map, buttons_t *buttons)
         check_hover(game, buttons);
         check_clicks(game, buttons, map);
     }
+    return 0;
 }
 
 void my_world(game_t *game, map_t *map, buttons_t *buttons)
@@ -36,7 +37,8 @@ void my_world(game_t *game, map_t *map, buttons_t *buttons)
 
     fill_iso_map(game, map);
     while (sfRenderWindow_isOpen(game->window)) {
-        process_events(game, map, buttons);
+        if (process_events(game, map, buttons) == 84)
+            break;
         sfRenderWindow_clear(game->window, sfGrey);
         draw_2d_map(game, map);
         draw_buttons(game, buttons);
