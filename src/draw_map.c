@@ -7,7 +7,7 @@
 
 #include "my_world.h"
 
-sfVertexArray *create_quad(sfVector2f *p1, sfVector2f *p2,
+sfVertexArray *draw_quad(sfVector2f *p1, sfVector2f *p2,
     sfVector2f *p3, sfVector2f *p4)
 {
     sfVertexArray *vertex_array = sfVertexArray_create();
@@ -50,32 +50,31 @@ void draw_quad_outline(game_t *game, sfVector2f *points[4])
     sfVertexArray_destroy(line);
 }
 
-int create_map_grid(game_t *game, sfVertexArray *quad,
-    sfVector2f **map, int y)
+int create_map_grid(game_t *game, sfVertexArray *quad, map_t *map, int y)
 {
     sfVector2f *quad_points[4] = {NULL, NULL, NULL, NULL};
 
-    for (int x = 0; x < MAP_HEIGHT - 1; x++) {
-        quad = create_quad(&map[y][x], &map[y][x + 1],
-            &map[y + 1][x + 1], &map[y + 1][x]);
+    for (int x = 0; x < map->map_width - 1; x++) {
+        quad = draw_quad(&map->iso_map[y][x], &map->iso_map[y][x + 1],
+            &map->iso_map[y + 1][x + 1], &map->iso_map[y + 1][x]);
         if (!quad)
             return 84;
         sfRenderWindow_drawVertexArray(game->window, quad, NULL);
         sfVertexArray_destroy(quad);
-        quad_points[0] = &map[y][x];
-        quad_points[1] = &map[y][x + 1];
-        quad_points[2] = &map[y + 1][x + 1];
-        quad_points[3] = &map[y + 1][x];
+        quad_points[0] = &map->iso_map[y][x];
+        quad_points[1] = &map->iso_map[y][x + 1];
+        quad_points[2] = &map->iso_map[y + 1][x + 1];
+        quad_points[3] = &map->iso_map[y + 1][x];
         draw_quad_outline(game, quad_points);
     }
     return 0;
 }
 
-int draw_2d_map(game_t *game, sfVector2f **map)
+int draw_2d_map(game_t *game, map_t *map)
 {
     sfVertexArray *quad = NULL;
 
-    for (int y = 0; y < MAP_WIDTH - 1; y++) {
+    for (int y = 0; y < map->map_height - 1; y++) {
         if (create_map_grid(game, quad, map, y) == 84)
             return 84;
     }
