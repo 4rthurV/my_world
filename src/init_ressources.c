@@ -30,7 +30,7 @@ map_t *init_map(void)
         return NULL;
     map->map_height = MAP_HEIGHT;
     map->map_width = MAP_WIDTH;
-    map->array_map = create_zeroed_map();
+    map->array_map = create_zeroed_map(map->map_height, map->map_width);
     if (!map->array_map) {
         free(map);
         return NULL;
