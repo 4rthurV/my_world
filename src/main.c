@@ -46,23 +46,34 @@ void my_world(game_t *game, map_t *map, buttons_t *buttons)
     }
 }
 
+int init_structs(game_t *game, map_t **map, buttons_t **buttons)
+{
+    init_game(game);
+    *map = init_map();
+    *buttons = init_buttons(game);
+    if (!(*map) || !(*buttons))
+        return 84;
+    return 0;
+}
+
 int main(int argc, char **argv, char **env)
 {
     game_t *game = malloc(sizeof(game_t));
     map_t *map = NULL;
     buttons_t *buttons = NULL;
 
-    if (!env || !isatty(STDIN_FILENO)
-        || (argc > 1 && strcmp(argv[1], "-h") != 0) || !game)
+    if (!env || !isatty(STDIN_FILENO) || getenv("DISPLAY") == NULL
+        || (argc > 1 && strcmp(argv[1], "-h") != 0) || !game) {
+        free_all(map, buttons, game);
         return 84;
+    }
     if (argc == 2 && strcmp(argv[1], "-h") == 0)
         return help_option();
     if (argc == 1) {
-        init_game(game);
-        map = init_map();
-        buttons = init_buttons(game);
-        if (!map || !buttons)
+        if (init_structs(game, &map, &buttons) != 0) {
+            free_all(map, buttons, game);
             return 84;
+        }
         my_world(game, map, buttons);
     }
     free_all(map, buttons, game);
