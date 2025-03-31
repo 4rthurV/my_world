@@ -13,10 +13,15 @@ SRC	=	src/main.c \
 		src/draw_map.c \
 		src/camera_view.c \
 		src/click_terraform.c \
+		src/duplicate_map.c \
 		src/resize_map.c \
-		src/event.c \
-		src/init_buttons.c \
+		src/create_buttons.c \
 		src/hover.c \
+		src/click_quit.c \
+		src/check_clicks.c \
+		src/view_mode.c \
+		src/init_buttons.c \
+		src/draw_buttons.c \
 
 OBJ	=	$(SRC:.c=.o)
 
@@ -28,7 +33,11 @@ CSFMLFLAGS	=  -lcsfml-graphics -lcsfml-window -lcsfml-system -lcsfml-audio -lm
 all:	$(EXE_NAME)
 
 $(EXE_NAME): $(OBJ)
-	gcc -o $(EXE_NAME) $(OBJ) $(CFLAGS) $(CSFMLFLAGS) -g
+	gcc -o $(EXE_NAME) $(OBJ) $(CFLAGS) $(CSFMLFLAGS)
+
+debug: CFLAGS += -g
+debug: re
+	valgrind ./$(EXE_NAME)
 
 clean:
 	rm -f $(OBJ)
