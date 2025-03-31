@@ -39,6 +39,8 @@ void free_game(game_t *game)
     if (game) {
         if (game->state_mode)
             free(game->state_mode);
+        if (game->clock)
+            sfClock_destroy(game->clock);
         if (game->window)
             sfRenderWindow_destroy(game->window);
         free(game);
