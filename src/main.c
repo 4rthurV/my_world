@@ -32,15 +32,20 @@ void process_events(game_t *game, map_t *map)
     }
 }
 
-void my_world(game_t *game, map_t *map)
+void my_world(game_t *game, map_t *map, buttons_t *buttons)
 {
     sfColor sfGrey = sfColor_fromRGB(128, 128, 128);
+    buttons_t *current = NULL;
 
-    init_game(game);
     fill_iso_map(game, map);
     while (sfRenderWindow_isOpen(game->window)) {
         process_events(game, map);
         sfRenderWindow_clear(game->window, sfGrey);
+        current = buttons;
+        while (current) {
+            sfRenderWindow_drawSprite(game->window, current->sprite, NULL);
+            current = current->next;
+        }
         draw_2d_map(game, map);
         sfRenderWindow_display(game->window);
     }
@@ -50,6 +55,7 @@ int main(int argc, char **argv, char **env)
 {
     game_t *game = malloc(sizeof(game_t));
     map_t *map = NULL;
+    buttons_t *buttons = NULL;
 
     if (!env || !isatty(STDIN_FILENO)
         || (argc > 1 && strcmp(argv[1], "-h") != 0) || !game)
@@ -57,14 +63,13 @@ int main(int argc, char **argv, char **env)
     if (argc == 2 && strcmp(argv[1], "-h") == 0)
         return help_option();
     if (argc == 1) {
+        init_game(game);
         map = init_map();
-        if (!map) {
-            write(2, "Failed to initialize map.\n", 26);
+        buttons = init_buttons(game);
+        if (!map || !buttons)
             return 84;
-        }
-        my_world(game, map);
+        my_world(game, map, buttons);
     }
-    free_map(map);
-    free(game);
+    free_all(map, buttons, game);
     return 0;
 }
