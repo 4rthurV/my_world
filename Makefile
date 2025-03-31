@@ -13,6 +13,8 @@ SRC	=	src/main.c \
 		src/draw_map.c \
 		src/camera_view.c \
 		src/click_terraform.c \
+		src/resize_map.c \
+		src/event.c \
 
 OBJ	=	$(SRC:.c=.o)
 
