@@ -15,14 +15,20 @@ static int help_option(void)
 
 void process_events(game_t *game, map_t *map)
 {
+    static int resized = 0;
+
     while (sfRenderWindow_pollEvent(game->window, &game->event)) {
         if (game->event.type == sfEvtClosed)
             sfRenderWindow_close(game->window);
-        if (sfKeyboard_isKeyPressed(sfKeyEscape))
+        if (game->event.type == sfEvtKeyPressed &&
+            game->event.key.code == sfKeyEscape)
             sfRenderWindow_close(game->window);
         update_view_key_arrows(game, map);
         if (game->event.type == sfEvtMouseButtonPressed)
             view_point_events(map, game);
+        if (game->event.type == sfEvtKeyPressed)
+            handle_resize_event(game, map, &resized);
+        reset_resize_event(game, &resized);
     }
 }
 
