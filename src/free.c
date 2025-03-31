@@ -18,6 +18,20 @@ int free_tile_map(sfVector2f **tile_map, int map_height)
     return 0;
 }
 
+void free_maps(int **array_map, sfVector2f **iso_map, int map_height)
+{
+    if (array_map) {
+        for (int y = 0; y < map_height; y++)
+            free(array_map[y]);
+        free(array_map);
+    }
+    if (iso_map) {
+        for (int y = 0; y < map_height; y++)
+            free(iso_map[y]);
+        free(iso_map);
+    }
+}
+
 void free_map(map_t *map)
 {
     if (map) {
