@@ -54,6 +54,7 @@ typedef struct map_s {
     int map_width;
     int tile_size;
     sfVector2f **iso_map;
+    sfTexture *texture;
 } map_t;
 
 typedef struct buttons_s {
