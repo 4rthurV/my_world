@@ -41,14 +41,18 @@ typedef struct game_s {
     sfRenderWindow *window;
     sfEvent event;
     sfVideoMode mode;
-    sfSprite *image;
-    sfTexture *background;
+    sfVector2f window_size;
+    int angle_x;
+    int angle_y;
 } game_t;
 
 tile_t *generate_tile_map(int map[MAP_Y][MAP_X]);
-sfVector2f **create_2d_map(int map_height, int map_width);
+sfVector2f **create_2d_map(game_t *game, int map_height, int map_width);
 int free_tile_map(sfVector2f **tile_map, int map_height);
 tile_t *create_tile(sfVector2f new_tile, int z);
-double project_iso_point_x(int x, int y);
-double project_iso_point_y(int x, int y, int z);
+double project_iso_point_x(game_t *game, int x, int y);
+double project_iso_point_y(game_t *game, int x, int y, int z);
+void fill_iso_map(game_t *game, sfVector2f **iso_map,
+    int map_height, int map_width);
+void init_game(game_t *game);
 #endif
