@@ -13,13 +13,14 @@ static int help_option(void)
     return 0;
 }
 
-void process_events(game_t *game)
+void process_events(game_t *game, map_t *map)
 {
     while (sfRenderWindow_pollEvent(game->window, &game->event)) {
         if (game->event.type == sfEvtClosed)
             sfRenderWindow_close(game->window);
         if (sfKeyboard_isKeyPressed(sfKeyEscape))
             sfRenderWindow_close(game->window);
+        update_view_key_arrows(game, map);
     }
 }
 
@@ -30,7 +31,7 @@ void my_world(game_t *game, map_t *map)
     init_game(game);
     fill_iso_map(game, map);
     while (sfRenderWindow_isOpen(game->window)) {
-        process_events(game);
+        process_events(game, map);
         sfRenderWindow_clear(game->window, sfGrey);
         draw_2d_map(game, map);
         sfRenderWindow_display(game->window);

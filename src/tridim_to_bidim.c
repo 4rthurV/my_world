@@ -72,9 +72,8 @@ void fill_iso_map(game_t *game, map_t *map)
     int x = 0;
     double base_x = game->window_size.x / 2;
     double base_y = game->window_size.y / 2;
-    int **array_map = create_zeroed_map();
 
-    if (!array_map)
+    if (!game || !map || !map->array_map)
         return;
     for (y = 0; y < map->map_height; y++) {
         for (x = 0; x < map->map_width; x++) {
@@ -82,10 +81,7 @@ void fill_iso_map(game_t *game, map_t *map)
                 project_iso_point_x(game, x * TILE_SIZE, y * TILE_SIZE);
             map->iso_map[y][x].y = base_y +
                 project_iso_point_y(game, x * TILE_SIZE,
-                y * TILE_SIZE, array_map[y][x]);
+                y * TILE_SIZE, map->array_map[y][x]);
         }
     }
-    for (y = 0; y < map->map_height; y++)
-        free(array_map[y]);
-    free(array_map);
 }
