@@ -16,6 +16,11 @@ void init_game(game_t *game)
         sfResize | sfClose, NULL);
     sfRenderWindow_setFramerateLimit(game->window, 60);
     game->window_size = (sfVector2f){1920, 1080};
+    game->clock = sfClock_create();
+    if (!game->clock) {
+        free(mode);
+        return;
+    }
     game->angle_x = 30;
     game->angle_y = 20;
     mode = strdup("view");
