@@ -83,7 +83,6 @@ void change_tile_texture(map_t *map, game_t *game, buttons_t *buttons)
     if (game->event.mouseButton.button != sfMouseLeft)
         return;
     selected_texture = get_selected_texture(buttons);
-    if (selected_texture) {
+    if (selected_texture)
         apply_texture_to_tile(map, game, selected_texture);
-    }
 }
