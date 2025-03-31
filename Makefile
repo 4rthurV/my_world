@@ -30,6 +30,7 @@ SRC	=	src/main.c \
         src/texture_loader.c \
         src/free_resources.c \
         src/help.c \
+        src/sounds.c
 
 OBJ	=	$(SRC:.c=.o)
 
