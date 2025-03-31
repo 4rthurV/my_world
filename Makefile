@@ -36,7 +36,7 @@ OBJ	=	$(SRC:.c=.o)
 
 EXE_NAME	=	my_world
 
-CFLAGS	+=	-Wall -Wextra -Iinclude -g
+CFLAGS	+=	-Wall -Wextra -Iinclude
 CSFMLFLAGS	=  -lcsfml-graphics -lcsfml-window -lcsfml-system -lcsfml-audio -lm
 
 all:	$(EXE_NAME)
