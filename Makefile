@@ -24,6 +24,8 @@ SRC	=	src/main.c \
 		src/view_mode.c \
 		src/init_buttons.c \
 		src/draw_buttons.c \
+		src/zoom_dezoom.c \
+		src/button_clicked.c \
 
 OBJ	=	$(SRC:.c=.o)
 
