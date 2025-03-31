@@ -9,6 +9,7 @@ SRC	=	src/main.c \
 		src/tridim_to_bidim.c \
 		src/free.c \
 		src/tile.c \
+		src/init_ressources.c \
 
 OBJ	=	$(SRC:.c=.o)
 
