@@ -7,8 +7,8 @@
 
 #ifndef MY_WORLD
     #define MY_WORLD
-    #define MAP_WIDTH   6
-    #define MAP_HEIGHT   6
+    #define MAP_WIDTH   7
+    #define MAP_HEIGHT   7
     #define TILE_SIZE   64
     #define M_PI 3.14159265358979323846
 
@@ -46,18 +46,28 @@ typedef struct game_s {
     int angle_y;
 } game_t;
 
+typedef struct map_s {
+    int **array_map;
+    int map_height;
+    int map_width;
+    sfVector2f **iso_map;
+} map_t;
+
 tile_t *generate_tile_map(int map[MAP_HEIGHT][MAP_WIDTH]);
-sfVector2f **create_2d_map(game_t *game);
+sfVector2f **create_2d_map(game_t *game, map_t *map);
 int free_tile_map(sfVector2f **tile_map, int map_height);
 tile_t *create_tile(sfVector2f new_tile, int z);
 double project_iso_point_x(game_t *game, int x, int y);
 double project_iso_point_y(game_t *game, int x, int y, int z);
-void fill_iso_map(game_t *game, sfVector2f **iso_map);
+void fill_iso_map(game_t *game, map_t *map);
 void init_game(game_t *game);
 sfVertexArray *create_quad(sfVector2f *p1, sfVector2f *p2,
     sfVector2f *p3, sfVector2f *p4);
 void draw_quad_outline(game_t *game, sfVector2f *points[4]);
-int create_map_grid(game_t *game, sfVertexArray *quad,
-    sfVector2f **map, int y);
-int draw_2d_map(game_t *game, sfVector2f **map);
+int create_map_grid(game_t *game, sfVertexArray *quad, map_t *map, int y);
+int draw_2d_map(game_t *game, map_t *map);
+sfVector2f **allocate_iso_map_rows(void);
+bool allocate_iso_map_columns(sfVector2f **iso_map);
+int **create_zeroed_map(void);
+void free_map(map_t *map);
 #endif
