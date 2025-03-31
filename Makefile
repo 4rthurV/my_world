@@ -14,24 +14,18 @@ OBJ	=	$(SRC:.c=.o)
 
 EXE_NAME	=	my_world
 
-LIB_NAME	=	lib/my/libmy.a
-
-CFLAGS	+=	-Wall -Wextra -Iinclude -Ilib/my -lm
+CFLAGS	+=	-Wall -Wextra -Iinclude
+CSFMLFLAGS	=  -lcsfml-graphics -lcsfml-window -lcsfml-system -lcsfml-audio -lm
 
 all:	$(EXE_NAME)
 
-$(EXE_NAME): $(LIB_NAME) $(OBJ)
-	gcc -o $(EXE_NAME) $(OBJ) -Llib/my -lmy $(CFLAGS) -g
-
-$(LIB_NAME):
-	make -C lib/my
+$(EXE_NAME): $(OBJ)
+	gcc -o $(EXE_NAME) $(OBJ) $(CFLAGS) $(CSFMLFLAGS) -g
 
 clean:
 	rm -f $(OBJ)
-	make -C lib/my clean
 
 fclean: clean
 	rm -f $(EXE_NAME)
-	make -C lib/my fclean
 
 re: fclean all
