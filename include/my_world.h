@@ -55,6 +55,7 @@ typedef struct map_s {
     int tile_size;
     sfVector2f **iso_map;
     sfTexture *texture;
+    sfTexture ***tile_textures;
 } map_t;
 
 typedef struct buttons_s {
@@ -78,7 +79,7 @@ void init_game(game_t *game);
 sfVertexArray *create_quad(sfVector2f *p1, sfVector2f *p2,
     sfVector2f *p3, sfVector2f *p4);
 void draw_quad_outline(game_t *game, sfVector2f *points[4]);
-int create_map_grid(game_t *game, sfVertexArray *quad, map_t *map, int y);
+int create_map_grid(game_t *game, map_t *map, int y);
 int draw_2d_map(game_t *game, map_t *map);
 sfVector2f **allocate_iso_map_rows(void);
 bool allocate_iso_map_columns(sfVector2f **iso_map);
@@ -125,4 +126,7 @@ void handle_terraform_mode(game_t *game, buttons_t *buttons, map_t *map);
 void handle_zoom_dezoom(map_t *map, game_t *game, buttons_t *buttons);
 bool check_click_on_button(game_t *game, buttons_t *buttons,
     char *button_name);
+void change_tile_texture(map_t *map, game_t *game, buttons_t *buttons);
+sfTexture *load_texture_by_name(char *texture_name);
+void free_tile_textures(map_t *map);
 #endif
