@@ -7,8 +7,8 @@
 
 #ifndef MY_WORLD
     #define MY_WORLD
-    #define MAP_WIDTH   7
-    #define MAP_HEIGHT   7
+    #define MAP_WIDTH   12
+    #define MAP_HEIGHT   12
     #define TILE_SIZE   64
     #define M_PI 3.14159265358979323846
 
@@ -71,4 +71,5 @@ bool allocate_iso_map_columns(sfVector2f **iso_map);
 int **create_zeroed_map(void);
 void free_map(map_t *map);
 map_t *init_map(void);
+void update_view_key_arrows(game_t *game, map_t *map);
 #endif
