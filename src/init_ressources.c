@@ -11,7 +11,7 @@ void init_game(game_t *game)
 {
     game->mode = (sfVideoMode){1920, 1080, 32};
     game->window = sfRenderWindow_create(game->mode, "my_world",
-        sfResize | sfClose | sfFullscreen, NULL);
+        sfResize | sfClose, NULL);
     game->window_size = (sfVector2f){1920, 1080};
     game->angle_x = 30;
     game->angle_y = 20;
