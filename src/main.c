@@ -7,17 +7,6 @@
 
 #include "my_world.h"
 
-//void display_tile_vectors(int map_height,
-//  int map_width, sfVector2f **tile_map)
-//{
-//    for (int y = 0; y < map_height; y++) {
-//        for (int x = 0; x < map_width; x++) {
-//            printf("Tile at (%.2f, %.2f)\n",
-//                tile_map[y][x].x, tile_map[y][x].y);
-//        }
-//    }
-//}
-
 static int help_option(void)
 {
     write(0, "USAGE:\n  ./my_world\n  ./my_world -h\n", 36);
@@ -34,28 +23,68 @@ void process_events(game_t *game)
     }
 }
 
-void init_game(game_t *game)
+sfVertexArray *create_line(sfVector2f *point1, sfVector2f *point2)
 {
-    game->mode = (sfVideoMode){1920, 1080, 32};
-    game->window = sfRenderWindow_create(game->mode, "my_world",
-        sfResize | sfClose | sfFullscreen, NULL);
+    sfVertexArray *vertex_array = sfVertexArray_create();
+    sfVertex vertex1 = {.position = *point1, .color = sfWhite};
+    sfVertex vertex2 = {.position = *point2, .color = sfWhite};
+
+    if (!vertex_array)
+        return NULL;
+    sfVertexArray_append(vertex_array, vertex1);
+    sfVertexArray_append(vertex_array, vertex2);
+    sfVertexArray_setPrimitiveType(vertex_array, sfLinesStrip);
+    return vertex_array;
+}
+
+int draw_2d_map(game_t *game, sfVector2f **map,
+    int map_width, int map_height)
+{
+    sfVertexArray *line = NULL;
+
+    for (int y = 0; y < map_height; y++) {
+        for (int x = 0; x < map_width; x++) {
+            if (x < map_width - 1) {
+                line = create_line(&map[y][x], &map[y][x + 1]);
+                if (!line)
+                    return 84;
+                sfRenderWindow_drawVertexArray(game->window, line, NULL);
+                sfVertexArray_destroy(line);
+            }
+            if (y < map_height - 1) {
+                line = create_line(&map[y][x], &map[y + 1][x]);
+                if (!line)
+                    return 84;
+                sfRenderWindow_drawVertexArray(game->window, line, NULL);
+                sfVertexArray_destroy(line);
+            }
+        }
+    }
+    return 0;
 }
 
 void my_world(game_t *game)
 {
+    sfColor sfGrey = sfColor_fromRGB(128, 128, 128);
+    sfVector2f **tile_map = NULL;
+
     init_game(game);
+    tile_map = create_2d_map(game, MAP_Y, MAP_X);
+    if (!tile_map) {
+        write(2, "Failed to create 2D map.\n", 26);
+        return;
+    }
     while (sfRenderWindow_isOpen(game->window)) {
         process_events(game);
-        sfRenderWindow_clear(game->window, sfBlack);
+        sfRenderWindow_clear(game->window, sfGrey);
+        draw_2d_map(game, tile_map, MAP_X, MAP_Y);
         sfRenderWindow_display(game->window);
     }
+    free_tile_map(tile_map, MAP_Y);
 }
 
 int main(int argc, char **argv, char **env)
 {
-    int map_height = MAP_Y;
-    int map_width = MAP_X;
-    sfVector2f **tile_map = NULL;
     game_t *game = malloc(sizeof(game_t));
 
     if (!env || !isatty(STDIN_FILENO)
@@ -63,13 +92,7 @@ int main(int argc, char **argv, char **env)
         return 84;
     if (argc == 2 && strcmp(argv[1], "-h") == 0)
         return help_option();
-    if (argc == 1) {
-        tile_map = create_2d_map(map_height, map_width);
-        if (!tile_map) {
-            write(2, "Failed to create 2D map.\n", 26);
-            return 84;
-        }
+    if (argc == 1)
         my_world(game);
-        return free_tile_map(tile_map, map_height);
-    }
+    return 0;
 }
