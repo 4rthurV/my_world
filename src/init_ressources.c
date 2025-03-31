@@ -16,3 +16,25 @@ void init_game(game_t *game)
     game->angle_x = 30;
     game->angle_y = 20;
 }
+
+map_t *init_map(void)
+{
+    map_t *map = malloc(sizeof(map_t));
+
+    if (!map)
+        return NULL;
+    map->map_height = MAP_HEIGHT;
+    map->map_width = MAP_WIDTH;
+    map->array_map = create_zeroed_map();
+    if (!map->array_map) {
+        free(map);
+        return NULL;
+    }
+    map->iso_map = allocate_iso_map_rows();
+    if (!map->iso_map || !allocate_iso_map_columns(map->iso_map)) {
+        free(map->array_map);
+        free(map);
+        return NULL;
+    }
+    return map;
+}
