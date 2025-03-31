@@ -48,19 +48,19 @@ static int free_map_array_error(int **map, int y)
     return 0;
 }
 
-int **create_zeroed_map(void)
+int **create_zeroed_map(int width, int height)
 {
-    int **map = malloc(MAP_HEIGHT * sizeof(int *));
+    int **map = malloc(height * sizeof(int *));
 
     if (!map)
         return NULL;
-    for (int y = 0; y < MAP_HEIGHT; y++) {
-        map[y] = malloc(MAP_WIDTH * sizeof(int));
+    for (int y = 0; y < height; y++) {
+        map[y] = malloc(width * sizeof(int));
         if (!map[y]) {
             free_map_array_error(map, y);
             return NULL;
         }
-        for (int x = 0; x < MAP_WIDTH; x++)
+        for (int x = 0; x < width; x++)
             map[y][x] = 0;
     }
     return map;
