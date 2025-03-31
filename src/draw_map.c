@@ -11,10 +11,10 @@ sfVertexArray *draw_quad(sfVector2f *p1, sfVector2f *p2,
     sfVector2f *p3, sfVector2f *p4)
 {
     sfVertexArray *vertex_array = sfVertexArray_create();
-    sfColor color_1 = sfColor_fromRGB(100, 100, 255);
-    sfColor color_2 = sfColor_fromRGB(150, 150, 200);
-    sfColor color_3 = sfColor_fromRGB(120, 120, 120);
-    sfColor color_4 = sfColor_fromRGB(80, 255, 255);
+    sfColor color_1 = sfColor_fromRGB(89, 102, 67);
+    sfColor color_2 = sfColor_fromRGB(89, 102, 67);
+    sfColor color_3 = sfColor_fromRGB(89, 102, 67);
+    sfColor color_4 = sfColor_fromRGB(89, 102, 67);
     sfVertex v1 = {.position = *p1, .color = color_1};
     sfVertex v2 = {.position = *p2, .color = color_2};
     sfVertex v3 = {.position = *p3, .color = color_3};
@@ -33,7 +33,7 @@ sfVertexArray *draw_quad(sfVector2f *p1, sfVector2f *p2,
 void draw_quad_outline(game_t *game, sfVector2f *points[4])
 {
     sfVertexArray *line = sfVertexArray_create();
-    sfColor border_color = sfWhite;
+    sfColor border_color = sfBlack;
     sfVertex v1 = {.position = *points[0], .color = border_color};
     sfVertex v2 = {.position = *points[1], .color = border_color};
     sfVertex v3 = {.position = *points[2], .color = border_color};
