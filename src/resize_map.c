@@ -10,8 +10,10 @@
 void up_map_size(game_t *game, buttons_t *current,
     map_t *map, int *resized)
 {
-    if (strcmp(current->name, "temp_plus") == 0 &&
-        button_is_clicked(game, current)) {
+    if ((strcmp(current->name, "temp_plus") == 0 &&
+        button_is_clicked(game, current)) ||
+        (game->event.type == sfEvtKeyPressed &&
+        game->event.key.code == sfKeyAdd)) {
         if (*resized == 0) {
             handle_resize_map(game, map, 1);
             *resized = 1;
@@ -22,8 +24,10 @@ void up_map_size(game_t *game, buttons_t *current,
 void down_map_size(game_t *game, buttons_t *current,
     map_t *map, int *resized)
 {
-    if (strcmp(current->name, "temp_minus") == 0 &&
-        button_is_clicked(game, current)) {
+    if ((strcmp(current->name, "temp_minus") == 0 &&
+        button_is_clicked(game, current)) ||
+        (game->event.type == sfEvtKeyPressed &&
+        game->event.key.code == sfKeySubtract)) {
         if (*resized == 0) {
             handle_resize_map(game, map, 0);
             *resized = 1;
