@@ -30,9 +30,11 @@ void switch_textures(buttons_t *current)
     char *state = NULL;
 
     if (current->phase == 0)
-        state = "graphics/idle/";
-    else if (current->phase == 1)
-        state = "graphics/hover/";
+        state = strdup("graphics/idle/");
+    if (current->phase == 1)
+        state = strdup("graphics/hover/");
+    if (current->phase == 2)
+        state = strdup("graphics/clicked/");
     if (state)
         replace_texture(current, state);
 }
