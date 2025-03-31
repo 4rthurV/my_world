@@ -52,6 +52,7 @@ typedef struct map_s {
     int **array_map;
     int map_height;
     int map_width;
+    int tile_size;
     sfVector2f **iso_map;
 } map_t;
 
@@ -112,10 +113,15 @@ void free_maps(int **array_map, sfVector2f **iso_map, int map_height);
 void add_button(buttons_t **head, sfVector2f pos,
     char *image_path, char *name);
 void init_terraform_buttons(buttons_t *buttons);
+void init_no_state_buttons(game_t *game, buttons_t *buttons);
+void init_zoom_buttons(game_t *game, buttons_t *buttons);
 void draw_buttons(game_t *game, buttons_t *buttons);
 void handle_texture_mode(game_t *game, buttons_t *buttons);
 void init_textures_buttons(buttons_t *buttons);
 void reset_texture_states(buttons_t *buttons);
 void handle_texture_buttons(game_t *game, buttons_t *buttons);
 void handle_terraform_mode(game_t *game, buttons_t *buttons, map_t *map);
+void handle_zoom_dezoom(map_t *map, game_t *game, buttons_t *buttons);
+bool check_click_on_button(game_t *game, buttons_t *buttons,
+    char *button_name);
 #endif
