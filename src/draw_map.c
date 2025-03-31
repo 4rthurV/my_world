@@ -7,19 +7,20 @@
 
 #include "my_world.h"
 
-sfVertexArray *draw_quad(sfVector2f *p1, sfVector2f *p2,
-    sfVector2f *p3, sfVector2f *p4)
+sfVertexArray *draw_quad(sfVector2f *points[4], sfTexture *texture)
 {
+    sfVector2u tex_size = sfTexture_getSize(texture);
     sfVertexArray *vertex_array = sfVertexArray_create();
-    sfColor color_1 = sfColor_fromRGB(89, 102, 67);
-    sfColor color_2 = sfColor_fromRGB(89, 102, 67);
-    sfColor color_3 = sfColor_fromRGB(89, 102, 67);
-    sfColor color_4 = sfColor_fromRGB(89, 102, 67);
-    sfVertex v1 = {.position = *p1, .color = color_1};
-    sfVertex v2 = {.position = *p2, .color = color_2};
-    sfVertex v3 = {.position = *p3, .color = color_3};
-    sfVertex v4 = {.position = *p4, .color = color_4};
+    sfVertex v1 = {.position = *points[0], .texCoords = {0, 0}};
+    sfVertex v2 = {.position = *points[1], .texCoords = {tex_size.x, 0}};
+    sfVertex v3 = {.position = *points[2],
+        .texCoords = {tex_size.x, tex_size.y}};
+    sfVertex v4 = {.position = *points[3], .texCoords = {0, tex_size.y}};
 
+    v1.color = sfWhite;
+    v2.color = sfWhite;
+    v3.color = sfWhite;
+    v4.color = sfWhite;
     if (!vertex_array)
         return NULL;
     sfVertexArray_append(vertex_array, v1);
@@ -53,18 +54,20 @@ void draw_quad_outline(game_t *game, sfVector2f *points[4])
 int create_map_grid(game_t *game, sfVertexArray *quad, map_t *map, int y)
 {
     sfVector2f *quad_points[4] = {NULL, NULL, NULL, NULL};
+    sfRenderStates states = {.blendMode = sfBlendAlpha,
+        .transform = sfTransform_Identity,
+        .texture = map->texture, .shader = NULL};
 
     for (int x = 0; x < map->map_width - 1; x++) {
-        quad = draw_quad(&map->iso_map[y][x], &map->iso_map[y][x + 1],
-            &map->iso_map[y + 1][x + 1], &map->iso_map[y + 1][x]);
-        if (!quad)
-            return 84;
-        sfRenderWindow_drawVertexArray(game->window, quad, NULL);
-        sfVertexArray_destroy(quad);
         quad_points[0] = &map->iso_map[y][x];
         quad_points[1] = &map->iso_map[y][x + 1];
         quad_points[2] = &map->iso_map[y + 1][x + 1];
         quad_points[3] = &map->iso_map[y + 1][x];
+        quad = draw_quad(quad_points, map->texture);
+        if (!quad)
+            return 84;
+        sfRenderWindow_drawVertexArray(game->window, quad, &states);
+        sfVertexArray_destroy(quad);
         draw_quad_outline(game, quad_points);
     }
     return 0;
