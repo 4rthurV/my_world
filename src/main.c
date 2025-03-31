@@ -13,7 +13,7 @@ static int help_option(void)
     return 0;
 }
 
-void process_events(game_t *game, map_t *map)
+void process_events(game_t *game, map_t *map, buttons_t *buttons)
 {
     static int resized = 0;
 
@@ -29,24 +29,31 @@ void process_events(game_t *game, map_t *map)
         if (game->event.type == sfEvtKeyPressed)
             handle_resize_event(game, map, &resized);
         reset_resize_event(game, &resized);
+        check_hover(game, buttons);
+    }
+}
+
+void draw_buttons(game_t *game, buttons_t *buttons)
+{
+    buttons_t *current = NULL;
+
+    current = buttons;
+    while (current) {
+        sfRenderWindow_drawSprite(game->window, current->sprite, NULL);
+        current = current->next;
     }
 }
 
 void my_world(game_t *game, map_t *map, buttons_t *buttons)
 {
     sfColor sfGrey = sfColor_fromRGB(128, 128, 128);
-    buttons_t *current = NULL;
 
     fill_iso_map(game, map);
     while (sfRenderWindow_isOpen(game->window)) {
-        process_events(game, map);
+        process_events(game, map, buttons);
         sfRenderWindow_clear(game->window, sfGrey);
-        current = buttons;
-        while (current) {
-            sfRenderWindow_drawSprite(game->window, current->sprite, NULL);
-            current = current->next;
-        }
         draw_2d_map(game, map);
+        draw_buttons(game, buttons);
         sfRenderWindow_display(game->window);
     }
 }
