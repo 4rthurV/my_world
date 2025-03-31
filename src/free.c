@@ -27,3 +27,26 @@ void free_map(map_t *map)
         free(map);
     }
 }
+
+void free_buttons(buttons_t *buttons)
+{
+    buttons_t *temp;
+
+    while (buttons) {
+        temp = buttons;
+        buttons = buttons->next;
+        sfSprite_destroy(temp->sprite);
+        sfTexture_destroy(temp->texture);
+        free(temp);
+    }
+}
+
+void free_all(map_t *map, buttons_t *buttons, game_t *game)
+{
+    if (map)
+        free_map(map);
+    if (buttons)
+        free_buttons(buttons);
+    if (game)
+        free(game);
+}
