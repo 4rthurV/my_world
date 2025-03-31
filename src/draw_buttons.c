@@ -32,9 +32,10 @@ void draw_no_state_buttons(game_t *game, buttons_t *current)
 {
     if (strcmp(current->name, "temp_quit") == 0 || strcmp(current->name,
         "sound") == 0 || strcmp(current->name, "state_terraform") == 0 ||
-        strcmp(current->name, "state_textures") == 0 || strcmp(current->name,
-        "temp_save") == 0 || strcmp(current->name, "temp_zoom") == 0 ||
-        strcmp(current->name, "temp_dezoom") == 0)
+        strcmp(current->name, "state_textures") == 0
+        || strcmp(current->name, "temp_zoom") == 0 ||
+        strcmp(current->name, "temp_dezoom") == 0 ||
+        strcmp(current->name, "temp_help") == 0)
         sfRenderWindow_drawSprite(game->window, current->sprite, NULL);
 }
 
