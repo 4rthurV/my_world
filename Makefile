@@ -16,6 +16,7 @@ SRC	=	src/main.c \
 		src/resize_map.c \
 		src/event.c \
 		src/init_buttons.c \
+		src/hover.c \
 
 OBJ	=	$(SRC:.c=.o)
 
