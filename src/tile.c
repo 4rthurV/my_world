@@ -5,7 +5,6 @@
 ** tile.c
 */
 
-#include "my.h"
 #include "my_world.h"
 
 double project_iso_point_x(int x, int y)

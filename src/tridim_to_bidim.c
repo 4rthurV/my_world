@@ -5,7 +5,6 @@
 ** tridim_to_bidim.c
 */
 
-#include "my.h"
 #include "my_world.h"
 
 sfVector2f **allocate_iso_map_rows(int map_height)

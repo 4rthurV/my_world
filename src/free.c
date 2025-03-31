@@ -5,7 +5,6 @@
 ** free.c
 */
 
-#include "my.h"
 #include "my_world.h"
 
 int free_tile_map(sfVector2f **tile_map, int map_height)
