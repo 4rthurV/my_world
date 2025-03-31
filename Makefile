@@ -12,6 +12,7 @@ SRC	=	src/main.c \
 		src/init_ressources.c \
 		src/draw_map.c \
 		src/camera_view.c \
+		src/click_terraform.c \
 
 OBJ	=	$(SRC:.c=.o)
 
