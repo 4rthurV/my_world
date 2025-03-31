@@ -24,6 +24,7 @@ void process_events(game_t *game, map_t *map, buttons_t *buttons)
             game->event.key.code == sfKeyEscape)
             || click_quitbutton(game, buttons))
             sfRenderWindow_close(game->window);
+        handle_zoom_dezoom(map, game, buttons);
         check_hover(game, buttons);
         check_clicks(game, buttons, map);
     }
