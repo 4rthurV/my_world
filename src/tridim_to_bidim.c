@@ -70,12 +70,13 @@ static void place_every_tile(game_t *game, map_t *map, int x, int y)
 {
     double base_x = game->window_size.x / 2;
     double base_y = game->window_size.y / 2;
+    int size = map->tile_size;
 
     if (y < map->map_height && x < map->map_width) {
         map->iso_map[y][x].x = base_x +
-            project_iso_point_x(game, x * TILE_SIZE, y * TILE_SIZE);
+            project_iso_point_x(game, x * size, y * size);
         map->iso_map[y][x].y = base_y +
-            project_iso_point_y(game, x * TILE_SIZE, y * TILE_SIZE,
+            project_iso_point_y(game, x * size, y * size,
             map->array_map[y][x]);
     }
 }
