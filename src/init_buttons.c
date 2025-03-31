@@ -7,6 +7,22 @@
 
 #include "my_world.h"
 
+void init_zoom_buttons(game_t *game, buttons_t *buttons)
+{
+    add_button(&buttons, (sfVector2f){game->window_size.x - 110, 210},
+        "graphics/idle/", "temp_zoom");
+    add_button(&buttons, (sfVector2f){game->window_size.x - 110, 330},
+        "graphics/idle/", "temp_dezoom");
+}
+
+void init_no_state_buttons(game_t *game, buttons_t *buttons)
+{
+    add_button(&buttons, (sfVector2f){10, 10}, "graphics/idle/",
+        "temp_save");
+    add_button(&buttons, (sfVector2f){game->window_size.x - 230, 10},
+        "graphics/idle/", "sound");
+}
+
 void init_terraform_buttons(buttons_t *buttons)
 {
     add_button(&buttons,
