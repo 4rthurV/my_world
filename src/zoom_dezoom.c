@@ -36,9 +36,9 @@ void handle_zoom_dezoom(map_t *map, game_t *game, buttons_t *buttons)
             delta = 1;
     }
     if (game->event.type == sfEvtKeyPressed) {
-        if (game->event.key.code == sfKeyZ)
-            delta = 1;
         if (game->event.key.code == sfKeyD)
+            delta = 1;
+        if (game->event.key.code == sfKeyZ)
             delta = -1;
     }
     change_tile_size(map, delta);
