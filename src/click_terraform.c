@@ -17,7 +17,7 @@ int check_tile_clicked(map_t *map, game_t *game, int i)
     for (int j = 0; j < map->map_width; j++) {
         if (click_tile_distance(map->iso_map[i][j].x,
             map->iso_map[i][j].y, game->event.mouseButton.x,
-            game->event.mouseButton.y) < TILE_SIZE &&
+            game->event.mouseButton.y) < 50 &&
             game->event.mouseButton.button == sfMouseLeft) {
             map->iso_map[i][j].y -= 20;
             map->array_map[i][j] += 20;
@@ -25,7 +25,7 @@ int check_tile_clicked(map_t *map, game_t *game, int i)
         }
         if (click_tile_distance(map->iso_map[i][j].x,
             map->iso_map[i][j].y, game->event.mouseButton.x,
-            game->event.mouseButton.y) < TILE_SIZE &&
+            game->event.mouseButton.y) < 50 &&
             game->event.mouseButton.button == sfMouseRight) {
             map->iso_map[i][j].y += 20;
             map->array_map[i][j] -= 20;
