@@ -7,7 +7,7 @@
 
 #include "my_world.h"
 
-sfVertexArray *draw_quad(sfVector2f *points[4], sfTexture *texture)
+sfVertexArray *draw_quad(sfVector2f *points[4], const sfTexture *texture)
 {
     sfVector2u tex_size = sfTexture_getSize(texture);
     sfVertexArray *vertex_array = sfVertexArray_create();
@@ -51,34 +51,55 @@ void draw_quad_outline(game_t *game, sfVector2f *points[4])
     sfVertexArray_destroy(line);
 }
 
-int create_map_grid(game_t *game, sfVertexArray *quad, map_t *map, int y)
+static sfTexture *get_tile_texture(map_t *map, int y, int x)
+{
+    if (!map || !map->tile_textures || y >= map->map_height ||
+        x >= map->map_width || !map->tile_textures[y])
+        return map->texture;
+    if (map->tile_textures[y][x])
+        return map->tile_textures[y][x];
+    return map->texture;
+}
+
+static void draw_quad_for_tile(game_t *game, map_t *map, int y, int x)
 {
     sfVector2f *quad_points[4] = {NULL, NULL, NULL, NULL};
-    sfRenderStates states = {.blendMode = sfBlendAlpha,
-        .transform = sfTransform_Identity,
-        .texture = map->texture, .shader = NULL};
+    sfRenderStates states;
+    sfVertexArray *quad;
 
+    quad_points[0] = &map->iso_map[y][x];
+    quad_points[1] = &map->iso_map[y][x + 1];
+    quad_points[2] = &map->iso_map[y + 1][x + 1];
+    quad_points[3] = &map->iso_map[y + 1][x];
+    states.blendMode = sfBlendAlpha;
+    states.transform = sfTransform_Identity;
+    states.texture = get_tile_texture(map, y, x);
+    states.shader = NULL;
+    quad = draw_quad(quad_points, states.texture);
+    if (!quad)
+        return;
+    sfRenderWindow_drawVertexArray(game->window, quad, &states);
+    sfVertexArray_destroy(quad);
+    draw_quad_outline(game, quad_points);
+}
+
+int create_map_grid(game_t *game, map_t *map, int y)
+{
+    if (!map || !map->iso_map || y >= map->map_height - 1)
+        return 84;
     for (int x = 0; x < map->map_width - 1; x++) {
-        quad_points[0] = &map->iso_map[y][x];
-        quad_points[1] = &map->iso_map[y][x + 1];
-        quad_points[2] = &map->iso_map[y + 1][x + 1];
-        quad_points[3] = &map->iso_map[y + 1][x];
-        quad = draw_quad(quad_points, map->texture);
-        if (!quad)
-            return 84;
-        sfRenderWindow_drawVertexArray(game->window, quad, &states);
-        sfVertexArray_destroy(quad);
-        draw_quad_outline(game, quad_points);
+        if (!map->iso_map[y] || !map->iso_map[y + 1] ||
+            x >= map->map_width - 1)
+            continue;
+        draw_quad_for_tile(game, map, y, x);
     }
     return 0;
 }
 
 int draw_2d_map(game_t *game, map_t *map)
 {
-    sfVertexArray *quad = NULL;
-
     for (int y = 0; y < map->map_height - 1; y++) {
-        if (create_map_grid(game, quad, map, y) == 84)
+        if (create_map_grid(game, map, y) == 84)
             return 84;
     }
     return 0;
