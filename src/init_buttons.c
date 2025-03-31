@@ -19,7 +19,7 @@ void init_no_state_buttons(game_t *game, buttons_t *buttons)
 {
     add_button(&buttons, (sfVector2f){game->window_size.x - 230, 10},
         "graphics/idle/", "sound");
-    add_button(&buttons, (sfVector2f){450, 10}, "graphics/idle/", "temp_help");
+    add_button(&buttons, (sfVector2f){550, 10}, "graphics/idle/", "temp_help");
 }
 
 void init_terraform_buttons(buttons_t *buttons)
