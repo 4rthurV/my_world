@@ -7,8 +7,8 @@
 
 #ifndef MY_WORLD
     #define MY_WORLD
-    #define MAP_WIDTH   5
-    #define MAP_HEIGHT   5
+    #define MAP_WIDTH   11
+    #define MAP_HEIGHT   11
     #define TILE_SIZE   64
     #define M_PI 3.14159265358979323846
 
@@ -54,6 +54,13 @@ typedef struct map_s {
     sfVector2f **iso_map;
 } map_t;
 
+typedef struct buttons_s {
+    sfSprite *sprite;
+    sfTexture *texture;
+    int state;
+    struct buttons_s *next;
+} buttons_t;
+
 tile_t *generate_tile_map(int map[MAP_HEIGHT][MAP_WIDTH]);
 sfVector2f **create_2d_map(game_t *game, map_t *map);
 int free_tile_map(sfVector2f **tile_map, int map_height);
@@ -80,4 +87,6 @@ void free_iso_map_partial(sfVector2f **iso_map, int num_rows);
 int handle_resize_map(game_t *game, map_t *map, bool increase);
 void reset_resize_event(game_t *game, int *resized);
 void handle_resize_event(game_t *game, map_t *map, int *resized);
+buttons_t *init_buttons(game_t *game);
+void free_buttons(buttons_t *buttons);
 #endif
