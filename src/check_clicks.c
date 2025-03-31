@@ -58,6 +58,7 @@ static void handle_mode(game_t *game, buttons_t *buttons, map_t *map)
     }
     if (strcmp(game->state_mode, "textures") == 0) {
         handle_texture_mode(game, buttons);
+        change_tile_texture(map, game, buttons);
         return;
     }
     handle_view_mode(game, buttons);
