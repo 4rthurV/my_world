@@ -15,32 +15,17 @@ static int help_option(void)
 
 void process_events(game_t *game, map_t *map, buttons_t *buttons)
 {
-    static int resized = 0;
-
     while (sfRenderWindow_pollEvent(game->window, &game->event)) {
-        if (game->event.type == sfEvtClosed)
+        if (game->event.type == sfEvtClosed) {
+            free_all(map, buttons, game);
             sfRenderWindow_close(game->window);
-        if (game->event.type == sfEvtKeyPressed &&
+        }
+        if ((game->event.type == sfEvtKeyPressed &&
             game->event.key.code == sfKeyEscape)
+            || click_quitbutton(game, buttons))
             sfRenderWindow_close(game->window);
-        update_view_key_arrows(game, map);
-        if (game->event.type == sfEvtMouseButtonPressed)
-            view_point_events(map, game);
-        if (game->event.type == sfEvtKeyPressed)
-            handle_resize_event(game, map, &resized);
-        reset_resize_event(game, &resized);
         check_hover(game, buttons);
-    }
-}
-
-void draw_buttons(game_t *game, buttons_t *buttons)
-{
-    buttons_t *current = NULL;
-
-    current = buttons;
-    while (current) {
-        sfRenderWindow_drawSprite(game->window, current->sprite, NULL);
-        current = current->next;
+        check_clicks(game, buttons, map);
     }
 }
 
