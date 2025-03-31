@@ -38,6 +38,12 @@ typedef struct tile_s {
     struct tile_s *next;
 } tile_t;
 
+typedef struct sound_s {
+    sfMusic *music;
+    sfMusic *click;
+    bool sound_on;
+} sound_t;
+
 typedef struct game_s {
     sfRenderWindow *window;
     sfEvent event;
@@ -48,6 +54,7 @@ typedef struct game_s {
     int angle_y;
     bool help;
     char *state_mode;
+    sound_t *sounds;
 } game_t;
 
 typedef struct panel_s {
@@ -82,7 +89,7 @@ tile_t *create_tile(sfVector2f new_tile, int z);
 double project_iso_point_x(game_t *game, int x, int y);
 double project_iso_point_y(game_t *game, int x, int y, int z);
 void fill_iso_map(game_t *game, map_t *map);
-void init_game(game_t *game);
+int init_game(game_t *game);
 sfVertexArray *create_quad(sfVector2f *p1, sfVector2f *p2,
     sfVector2f *p3, sfVector2f *p4);
 void draw_quad_outline(game_t *game, sfVector2f *points[4]);
@@ -139,4 +146,7 @@ void free_tile_textures(map_t *map);
 panel_t *init_help_panel(game_t *game);
 void handle_help_panel(game_t *game, buttons_t *buttons);
 void draw_help_panel(game_t *game, panel_t *help_panel);
+void check_sounds(game_t *game, buttons_t *buttons);
+void play_sounds(game_t *game);
+int init_sounds(game_t *game);
 #endif
