@@ -45,4 +45,6 @@ void init_textures_buttons(buttons_t *buttons)
         (sfVector2f){260, 900}, "graphics/idle/", "state_water");
     add_button(&buttons,
         (sfVector2f){390, 900}, "graphics/idle/", "state_stone");
+    add_button(&buttons,
+        (sfVector2f){520, 900}, "graphics/idle/", "state_sand");
 }

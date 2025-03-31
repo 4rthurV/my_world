@@ -14,7 +14,8 @@ void reset_texture_states(buttons_t *buttons)
     while (temp) {
         if (strcmp(temp->name, "state_grass") == 0 ||
             strcmp(temp->name, "state_water") == 0 ||
-            strcmp(temp->name, "state_stone") == 0) {
+            strcmp(temp->name, "state_stone") == 0 ||
+            strcmp(temp->name, "state_sand") == 0) {
             temp->phase = 0;
             switch_textures(temp);
         }
@@ -29,7 +30,8 @@ static void update_button_states(buttons_t *buttons, buttons_t *current)
     while (temp) {
         if ((strcmp(temp->name, "state_grass") == 0 ||
             strcmp(temp->name, "state_water") == 0 ||
-            strcmp(temp->name, "state_stone") == 0) &&
+            strcmp(temp->name, "state_stone") == 0 ||
+            strcmp(temp->name, "state_sand") == 0) &&
             temp != current) {
             temp->phase = 0;
             switch_textures(temp);
@@ -58,7 +60,8 @@ void handle_texture_buttons(game_t *game, buttons_t *buttons)
     while (current && current->name) {
         if ((strcmp(current->name, "state_grass") == 0 ||
             strcmp(current->name, "state_water") == 0 ||
-            strcmp(current->name, "state_stone") == 0) &&
+            strcmp(current->name, "state_stone") == 0 ||
+            strcmp(current->name, "state_sand") == 0) &&
             button_is_clicked(game, current)) {
             handle_texture_button_click(buttons, current);
             return;

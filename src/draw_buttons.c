@@ -22,7 +22,8 @@ void draw_texture_buttons(game_t *game, buttons_t *current)
     if (strcmp(game->state_mode, "textures") == 0) {
         if (strcmp(current->name, "state_grass") == 0 ||
             strcmp(current->name, "state_water") == 0 ||
-            strcmp(current->name, "state_stone") == 0)
+            strcmp(current->name, "state_stone") == 0 ||
+            strcmp(current->name, "state_sand") == 0)
             sfRenderWindow_drawSprite(game->window, current->sprite, NULL);
     }
 }
