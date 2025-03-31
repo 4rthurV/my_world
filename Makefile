@@ -11,6 +11,7 @@ SRC	=	src/main.c \
 		src/tile.c \
 		src/init_ressources.c \
 		src/draw_map.c \
+		src/camera_view.c \
 
 OBJ	=	$(SRC:.c=.o)
 
