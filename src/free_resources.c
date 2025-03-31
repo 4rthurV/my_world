@@ -43,6 +43,12 @@ void free_game(game_t *game)
             sfClock_destroy(game->clock);
         if (game->window)
             sfRenderWindow_destroy(game->window);
+        if (game->sounds->music)
+            sfMusic_destroy(game->sounds->music);
+        if (game->sounds->click)
+            sfMusic_destroy(game->sounds->click);
+        if (game->sounds)
+            free(game->sounds);
         free(game);
     }
 }
