@@ -12,12 +12,8 @@
     #define TILE_SIZE   64
     #define M_PI 3.14159265358979323846
 
-#include <stdbool.h>
-
-typedef struct sfvector_s {
-    float x;
-    float y;
-} sfvector_t;
+    #include <stdbool.h>
+    #include <SFML/System.h>
 
 typedef struct tile_s {
     double tile_x;
@@ -26,9 +22,9 @@ typedef struct tile_s {
 } tile_t;
 
 tile_t *generate_tile_map(int map[MAP_Y][MAP_X]);
-sfvector_t **create_twod_map(int map_height, int map_width);
-int free_tile_map(sfvector_t **tile_map, int map_height);
-tile_t *create_tile(int x, int y, int z);
+sfVector2f **create_2d_map(int map_height, int map_width);
+int free_tile_map(sfVector2f **tile_map, int map_height);
+tile_t *create_tile(sfVector2f new_tile, int z);
 double project_iso_point_x(int x, int y);
 double project_iso_point_y(int x, int y, int z);
 #endif
