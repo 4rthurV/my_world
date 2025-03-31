@@ -22,11 +22,11 @@ void init_terraform_buttons(buttons_t *buttons)
 void init_textures_buttons(buttons_t *buttons)
 {
     add_button(&buttons,
-        (sfVector2f){10, 960}, "graphics/idle/", "state_textures");
+        (sfVector2f){10, 900}, "graphics/idle/", "state_textures");
     add_button(&buttons,
-        (sfVector2f){130, 960}, "graphics/idle/", "state_grass");
+        (sfVector2f){130, 900}, "graphics/idle/", "state_grass");
     add_button(&buttons,
-        (sfVector2f){260, 960}, "graphics/idle/", "state_water");
+        (sfVector2f){260, 900}, "graphics/idle/", "state_water");
     add_button(&buttons,
-        (sfVector2f){390, 960}, "graphics/idle/", "state_stone");
+        (sfVector2f){390, 900}, "graphics/idle/", "state_stone");
 }
