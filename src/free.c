@@ -37,6 +37,7 @@ void free_buttons(buttons_t *buttons)
         buttons = buttons->next;
         sfSprite_destroy(temp->sprite);
         sfTexture_destroy(temp->texture);
+        free(temp->name);
         free(temp);
     }
 }
