@@ -43,6 +43,7 @@ typedef struct game_s {
     sfEvent event;
     sfVideoMode mode;
     sfVector2f window_size;
+    sfClock *clock;
     int angle_x;
     int angle_y;
     char *state_mode;
