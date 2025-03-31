@@ -70,4 +70,5 @@ sfVector2f **allocate_iso_map_rows(void);
 bool allocate_iso_map_columns(sfVector2f **iso_map);
 int **create_zeroed_map(void);
 void free_map(map_t *map);
+map_t *init_map(void);
 #endif
