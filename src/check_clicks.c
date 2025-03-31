@@ -22,34 +22,6 @@ void flip_other_buttons_state(buttons_t *buttons, char *new_button_state)
     }
 }
 
-static void exit_texture_mode(game_t *game, buttons_t *current,
-    buttons_t *buttons)
-{
-    current->phase = 0;
-    switch_textures(current);
-    change_mode_name(game, "view");
-    reset_texture_states(buttons);
-}
-
-void handle_texture_mode(game_t *game, buttons_t *buttons)
-{
-    buttons_t *current = buttons;
-
-    if (!current)
-        return;
-    while (current && current->name) {
-        if (strcmp(current->name, "state_textures") == 0
-            && button_is_clicked(game, current)) {
-            exit_texture_mode(game, current, buttons);
-            return;
-        }
-        current = current->next;
-    }
-    if (strcmp(game->state_mode, "textures") == 0) {
-        handle_texture_buttons(game, buttons);
-    }
-}
-
 static void handle_mode(game_t *game, buttons_t *buttons, map_t *map)
 {
     if (strcmp(game->state_mode, "terraform") == 0) {
