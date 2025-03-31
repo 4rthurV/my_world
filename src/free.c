@@ -18,6 +18,17 @@ int free_tile_map(sfVector2f **tile_map, int map_height)
     return 0;
 }
 
+void free_tile_textures(map_t *map)
+{
+    if (!map || !map->tile_textures)
+        return;
+    for (int y = 0; y < map->map_height; y++) {
+        if (map->tile_textures[y])
+            free(map->tile_textures[y]);
+    }
+    free(map->tile_textures);
+}
+
 void free_maps(int **array_map, sfVector2f **iso_map, int map_height)
 {
     if (array_map) {
@@ -30,37 +41,4 @@ void free_maps(int **array_map, sfVector2f **iso_map, int map_height)
             free(iso_map[y]);
         free(iso_map);
     }
-}
-
-void free_map(map_t *map)
-{
-    free_tile_map(map->iso_map, map->map_height);
-    if (map->array_map)
-        free(map->array_map);
-    sfTexture_destroy(map->texture);
-    free(map);
-}
-
-void free_buttons(buttons_t *buttons)
-{
-    buttons_t *temp;
-
-    while (buttons) {
-        temp = buttons;
-        buttons = buttons->next;
-        sfSprite_destroy(temp->sprite);
-        sfTexture_destroy(temp->texture);
-        free(temp->name);
-        free(temp);
-    }
-}
-
-void free_all(map_t *map, buttons_t *buttons, game_t *game)
-{
-    if (map)
-        free_map(map);
-    if (buttons)
-        free_buttons(buttons);
-    if (game)
-        free(game);
 }
