@@ -83,15 +83,10 @@ buttons_t *init_buttons(game_t *game)
 
     if (!game)
         return buttons;
-    add_button(&buttons,
-        (sfVector2f){game->window_size.x - 110, 10},
+    add_button(&buttons, (sfVector2f){game->window_size.x - 110, 10},
         "graphics/idle/", "temp_quit");
-    add_button(&buttons,
-        (sfVector2f){10, 10},
-        "graphics/idle/", "temp_save");
-    add_button(&buttons,
-        (sfVector2f){game->window_size.x - 230, 10},
-        "graphics/idle/", "sound");
+    init_no_state_buttons(game, buttons);
+    init_zoom_buttons(game, buttons);
     init_terraform_buttons(buttons);
     init_textures_buttons(buttons);
     return buttons;
