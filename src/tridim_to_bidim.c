@@ -18,7 +18,7 @@ sfVector2f **allocate_iso_map_rows(void)
     return iso_map;
 }
 
-static void free_iso_map_partial(sfVector2f **iso_map, int num_rows)
+void free_iso_map_partial(sfVector2f **iso_map, int num_rows)
 {
     for (int j = 0; j < num_rows; j++)
         free(iso_map[j]);
@@ -66,22 +66,26 @@ int **create_zeroed_map(void)
     return map;
 }
 
-void fill_iso_map(game_t *game, map_t *map)
+static void place_every_tile(game_t *game, map_t *map, int x, int y)
 {
-    int y = 0;
-    int x = 0;
     double base_x = game->window_size.x / 2;
     double base_y = game->window_size.y / 2;
 
-    if (!game || !map || !map->array_map)
+    if (y < map->map_height && x < map->map_width) {
+        map->iso_map[y][x].x = base_x +
+            project_iso_point_x(game, x * TILE_SIZE, y * TILE_SIZE);
+        map->iso_map[y][x].y = base_y +
+            project_iso_point_y(game, x * TILE_SIZE, y * TILE_SIZE,
+            map->array_map[y][x]);
+    }
+}
+
+void fill_iso_map(game_t *game, map_t *map)
+{
+    if (!game || !map || !map->array_map || !map->iso_map)
         return;
-    for (y = 0; y < map->map_height; y++) {
-        for (x = 0; x < map->map_width; x++) {
-            map->iso_map[y][x].x = base_x +
-                project_iso_point_x(game, x * TILE_SIZE, y * TILE_SIZE);
-            map->iso_map[y][x].y = base_y +
-                project_iso_point_y(game, x * TILE_SIZE,
-                y * TILE_SIZE, map->array_map[y][x]);
-        }
+    for (int y = 0; y < map->map_height; y++) {
+        for (int x = 0; x < map->map_width; x++)
+            place_every_tile(game, map, x, y);
     }
 }
