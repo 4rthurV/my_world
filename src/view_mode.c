@@ -20,12 +20,13 @@ void handle_view_mode(game_t *game, buttons_t *buttons)
     if (!current)
         return;
     while (current && current->name) {
-        if (strcmp(current->name, "state_terraform") == 0
-        && button_is_clicked(game, current)) {
+        if ((strcmp(current->name, "state_terraform") == 0 ||
+            strcmp(current->name, "state_textures") == 0)
+            && button_is_clicked(game, current)) {
             current->phase = 2;
             switch_textures(current);
             flip_other_buttons_state(buttons, current->name);
-            change_mode_name(game, "terraform");
+            change_mode_name(game, current->name + 6);
             return;
         }
         current = current->next;
