@@ -7,7 +7,7 @@
 
 #include "my_world.h"
 
-void init_game(game_t *game)
+int init_game(game_t *game)
 {
     game->mode = (sfVideoMode){1920, 1080, 32};
     game->window = sfRenderWindow_create(game->mode, "my_world",
@@ -16,11 +16,17 @@ void init_game(game_t *game)
     game->window_size = (sfVector2f){1920, 1080};
     game->clock = sfClock_create();
     if (!game->clock)
-        return;
+        return 84;
     game->angle_x = 30;
     game->angle_y = 20;
     game->help = false;
     game->state_mode = strdup("view");
+    game->sounds = malloc(sizeof(sound_t));
+    if (!game->sounds)
+        return 84;
+    if (init_sounds(game) == 84)
+        return 84;
+    return 0;
 }
 
 int init_map_texture(map_t *map)
