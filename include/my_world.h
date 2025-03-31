@@ -120,7 +120,6 @@ void init_zoom_buttons(game_t *game, buttons_t *buttons);
 void draw_buttons(game_t *game, buttons_t *buttons);
 void handle_texture_mode(game_t *game, buttons_t *buttons);
 void init_textures_buttons(buttons_t *buttons);
-void reset_texture_states(buttons_t *buttons);
 void handle_texture_buttons(game_t *game, buttons_t *buttons);
 void handle_terraform_mode(game_t *game, buttons_t *buttons, map_t *map);
 void handle_zoom_dezoom(map_t *map, game_t *game, buttons_t *buttons);
@@ -129,4 +128,5 @@ bool check_click_on_button(game_t *game, buttons_t *buttons,
 void change_tile_texture(map_t *map, game_t *game, buttons_t *buttons);
 sfTexture *load_texture_by_name(char *texture_name);
 void free_tile_textures(map_t *map);
+void handle_texture_mode(game_t *game, buttons_t *buttons);
 #endif
