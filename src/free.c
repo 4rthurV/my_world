@@ -34,12 +34,11 @@ void free_maps(int **array_map, sfVector2f **iso_map, int map_height)
 
 void free_map(map_t *map)
 {
-    if (map) {
-        free_tile_map(map->iso_map, map->map_height);
-        if (map->array_map)
-            free(map->array_map);
-        free(map);
-    }
+    free_tile_map(map->iso_map, map->map_height);
+    if (map->array_map)
+        free(map->array_map);
+    sfTexture_destroy(map->texture);
+    free(map);
 }
 
 void free_buttons(buttons_t *buttons)
