@@ -20,6 +20,7 @@ int check_tile_clicked(map_t *map, game_t *game, int i)
             game->event.mouseButton.y) < TILE_SIZE &&
             game->event.mouseButton.button == sfMouseLeft) {
             map->iso_map[i][j].y -= 20;
+            map->array_map[i][j] += 20;
             continue;
         }
         if (click_tile_distance(map->iso_map[i][j].x,
@@ -27,6 +28,7 @@ int check_tile_clicked(map_t *map, game_t *game, int i)
             game->event.mouseButton.y) < TILE_SIZE &&
             game->event.mouseButton.button == sfMouseRight) {
             map->iso_map[i][j].y += 20;
+            map->array_map[i][j] -= 20;
             continue;
         }
     }
