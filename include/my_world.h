@@ -7,9 +7,9 @@
 
 #ifndef MY_WORLD
     #define MY_WORLD
-    #define MAP_WIDTH   15
-    #define MAP_HEIGHT   15
-    #define TILE_SIZE   32
+    #define MAP_WIDTH   5
+    #define MAP_HEIGHT   5
+    #define TILE_SIZE   64
     #define M_PI 3.14159265358979323846
 
     #include <stdbool.h>
@@ -30,6 +30,7 @@
     #include <fcntl.h>
     #include <math.h>
     #include <string.h>
+    #include <stdbool.h>
 
 typedef struct tile_s {
     double tile_x;
@@ -73,4 +74,10 @@ void free_map(map_t *map);
 map_t *init_map(void);
 void update_view_key_arrows(game_t *game, map_t *map);
 void view_point_events(map_t *map, game_t *game);
+bool resize_iso_map(game_t *game, map_t *map);
+bool resize_array_map(map_t *map, int new_width, int new_height);
+void free_iso_map_partial(sfVector2f **iso_map, int num_rows);
+int handle_resize_map(game_t *game, map_t *map, bool increase);
+void reset_resize_event(game_t *game, int *resized);
+void handle_resize_event(game_t *game, map_t *map, int *resized);
 #endif
