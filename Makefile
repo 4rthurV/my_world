@@ -15,6 +15,7 @@ SRC	=	src/main.c \
 		src/click_terraform.c \
 		src/resize_map.c \
 		src/event.c \
+		src/init_buttons.c \
 
 OBJ	=	$(SRC:.c=.o)
 
