@@ -8,7 +8,7 @@
 #include "my.h"
 #include "my_world.h"
 
-int free_tile_map(sfvector_t **tile_map, int map_height)
+int free_tile_map(sfVector2f **tile_map, int map_height)
 {
     for (int y = 0; y < map_height; y++)
         free(tile_map[y]);

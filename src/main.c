@@ -8,8 +8,7 @@
 #include "my.h"
 #include "my_world.h"
 
-void display_tile_vectors(int map_height, int map_width,
-    sfvector_t **tile_map)
+void display_tile_vectors(int map_height, int map_width, sfVector2f **tile_map)
 {
     for (int y = 0; y < map_height; y++) {
         for (int x = 0; x < map_width; x++) {
@@ -29,14 +28,14 @@ int main(int argc, char **argv, char **env)
 {
     int map_height = MAP_Y;
     int map_width = MAP_X;
-    sfvector_t **tile_map = NULL;
+    sfVector2f **tile_map = NULL;
 
     if (!env || !isatty(STDIN_FILENO))
         return 84;
     if (argc == 2 && my_strcmp(argv[1], "-h") == 0)
         return help_option();
     if (argc == 1) {
-        tile_map = create_twod_map(map_height, map_width);
+        tile_map = create_2d_map(map_height, map_width);
         if (!tile_map) {
             write(2, "Failed to create 2D map.\n", 26);
             return 84;

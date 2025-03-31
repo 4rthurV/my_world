@@ -22,10 +22,10 @@ double project_iso_point_y(int x, int y, int z)
     return sin(angle_y) * y + sin(angle_y) * x - z;
 }
 
-tile_t *create_tile(int x, int y, int z)
+tile_t *create_tile(sfVector2f new_tile, int z)
 {
-    double scaled_x = x * TILE_SIZE;
-    double scaled_y = y * TILE_SIZE;
+    double scaled_x = new_tile.x * TILE_SIZE;
+    double scaled_y = new_tile.y * TILE_SIZE;
     tile_t *tile = malloc(sizeof(tile_t));
 
     if (!tile)
