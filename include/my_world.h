@@ -89,4 +89,5 @@ void reset_resize_event(game_t *game, int *resized);
 void handle_resize_event(game_t *game, map_t *map, int *resized);
 buttons_t *init_buttons(game_t *game);
 void free_buttons(buttons_t *buttons);
+void free_all(map_t *map, buttons_t *buttons, game_t *game);
 #endif
