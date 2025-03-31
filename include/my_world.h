@@ -57,7 +57,10 @@ typedef struct map_s {
 typedef struct buttons_s {
     sfSprite *sprite;
     sfTexture *texture;
-    int state;
+    sfVector2f pos;
+    char *name;
+    int phase;
+    int temp;
     struct buttons_s *next;
 } buttons_t;
 
@@ -90,4 +93,6 @@ void handle_resize_event(game_t *game, map_t *map, int *resized);
 buttons_t *init_buttons(game_t *game);
 void free_buttons(buttons_t *buttons);
 void free_all(map_t *map, buttons_t *buttons, game_t *game);
+void check_hover(game_t *game, buttons_t *buttons);
+char *concat_image_path(char *image_path, char *name);
 #endif
