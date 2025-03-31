@@ -24,10 +24,24 @@ void free_buttons(buttons_t *buttons)
     while (buttons) {
         temp = buttons;
         buttons = buttons->next;
-        sfSprite_destroy(temp->sprite);
-        sfTexture_destroy(temp->texture);
-        free(temp->name);
+        if (temp->sprite)
+            sfSprite_destroy(temp->sprite);
+        if (temp->texture)
+            sfTexture_destroy(temp->texture);
+        if (temp->name)
+            free(temp->name);
         free(temp);
+    }
+}
+
+void free_game(game_t *game)
+{
+    if (game) {
+        if (game->state_mode)
+            free(game->state_mode);
+        if (game->window)
+            sfRenderWindow_destroy(game->window);
+        free(game);
     }
 }
 
@@ -38,5 +52,5 @@ void free_all(map_t *map, buttons_t *buttons, game_t *game)
     if (buttons)
         free_buttons(buttons);
     if (game)
-        free(game);
+        free_game(game);
 }

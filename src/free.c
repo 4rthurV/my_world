@@ -26,7 +26,8 @@ void free_tile_textures(map_t *map)
         if (map->tile_textures[y])
             free(map->tile_textures[y]);
     }
-    free(map->tile_textures);
+    if (map->tile_textures)
+        free(map->tile_textures);
 }
 
 void free_maps(int **array_map, sfVector2f **iso_map, int map_height)
