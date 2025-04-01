@@ -95,9 +95,11 @@ Sprites: Buttons, game banner, help panel, tile textures.
 
 Sounds: Button clicks sounds and background music.
 
-## 👨‍💻 Author
+## 👨‍💻 Authors
 
-Arthur Vignes – Developed for EPITECH 2024 (B-MUL-100 Project).
+- Arthur Vignes
+- Eros Delianne-le-boucher         -> https://github.com/Sores-ss
+    Developed for EPITECH 2024 (B-MUL-100 Project).
 
 ## 🏛️ License
 
