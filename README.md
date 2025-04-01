@@ -99,7 +99,8 @@ Sounds: Button clicks sounds and background music.
 
 - Arthur Vignes
 - Eros Delianne-le-boucher         -> https://github.com/Sores-ss
-    Developed for EPITECH 2024 (B-MUL-100 Project).
+
+      Developed for EPITECH 2024 (B-MUL-100 Project).
 
 ## 🏛️ License
 
